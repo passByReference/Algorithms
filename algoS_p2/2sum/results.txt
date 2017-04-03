@@ -1,0 +1,1 @@
+result: 50195(counter / 2)
