@@ -21,12 +21,26 @@ int climbStairs_memo(int n) {
 }
 
 int climbStairs_dp(int n) {
+    /* version1 with O(n)
     if (n <= 2) return n;
     vector<int> dp ={0, 1, 2};
     for (int i = 3; i <= n; ++i) {
         dp.push_back(dp[i - 1] + dp[i - 2]);
     }
     return dp.back();
+
+    */
+
+    // version2 with O(1)
+
+    if (n <= 2) return n;
+    int a = 1, b = 2, c = 0;
+    for (int i = 3; i <= n; ++i) {
+        c = a + b;
+        a = b;
+        b = c;
+    }
+    return c;
 }
 
 int main() {
