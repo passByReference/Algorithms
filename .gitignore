@@ -38,3 +38,4 @@
 # Personal
 *.swp
 .DS_Store
+leetcode/.idea/*

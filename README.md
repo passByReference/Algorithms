@@ -1,2 +1,2 @@
-# DS-Algo
+# Algorithms 
 Data structure and algorithm puzzles
