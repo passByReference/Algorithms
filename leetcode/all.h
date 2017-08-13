@@ -16,7 +16,7 @@
 #include <functional>
 #include <unordered_map>
 
-void print(std::vector<int> vec) {
+void print(const std::vector<int>& vec) {
     for (auto& v : vec) {
         std::cout << v << ", ";
     }
