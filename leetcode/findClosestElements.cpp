@@ -5,83 +5,21 @@
 #include "all.h";
 
 using namespace std;
-vector<int> result;
-
-void fill_result(vector<int>::iterator iter, int k) {
-    cout << "value found = " << *iter << endl;
-    int steps = k / 2;
-    int left, right;
-    if (k == 1) {
-        result.push_back(*iter);
-    }
-    else if (k % 2 == 0) {
-        left = steps;
-        right = 0;
-
-        while (left > 0) {
-            cout << *(iter - left) << endl;
-            result.push_back(*(iter - left));
-            --left;
-        }
-
-        while (right < steps) {
-            cout << *(iter + right) << endl;
-            result.push_back(*(iter + right));
-            ++right;
-        }
-    } else {
-        left = steps + 1;
-        right = 0;
-
-        while (left > 0) {
-            cout << *(iter - left) << endl;
-            result.push_back(*(iter - left));
-            --left;
-        }
-        while (right < steps) {
-            cout << *(iter + right) << endl;
-            result.push_back(*(iter + right));
-            ++right;
-        }
-    }
-
-
-}
-
-vector<int>::iterator find_closest(vector<int>& arr, int x) {
-    int prev = INT_MAX;
-    int dis = 0;
-    for (auto iter = arr.begin(); iter != arr.end(); ++iter) {
-        dis = abs(*iter - x);
-        cout << prev << ", " << dis << endl;
-        if (dis > prev) return iter - 1;
-        prev = dis;
-    }
-    return arr.end();
-}
 
 vector<int> findClosestElements(vector<int>& arr, int k, int x) {
-    if (arr.empty()) return result;
-    if (x < arr.front()) {
-        return vector<int>(arr.begin(), arr.begin() + k);
-    } else if (x > arr.back()) {
-        return vector<int>(arr.end() - k, arr.end());
-    } else {
-        auto val_iter = find(arr.begin(), arr.end(), x);
-        if (val_iter == arr.end()) {
-            val_iter =  find_closest(arr, x);
-        }
-        if (val_iter != arr.end()) {
-            fill_result(val_iter, k);
-        }
+    int index = lower_bound(arr.begin(), arr.end(), x) - arr.begin();
+    int i = index - 1, j = index;
+    while (k--) {
+        (i < 0 || (j < arr.size() && abs(arr[i] - x) > abs(arr[j] - x))) ? ++j : --i;
     }
-
-    return result;
+    return vector<int>(arr.begin() + i + 1, arr.begin() + j);
+    
+    
 }
 
 int main() {
-    vector<int> vec = {1};
-    auto res = findClosestElements(vec, 1, 1);
+    vector<int> vec = {0,0,1,2,3,3,4,7,7,8};
+    auto res = findClosestElements(vec, 3, 5);
     print(res);
 
     return 0;
@@ -105,3 +43,29 @@ int main() {
 //[0,49,0,1,1,2]
 //Expected:
 //[1,1,2,3,3,3]
+//
+//Test 3
+//[0,1,2,2,2,3,6,8,8,9]
+//5
+//9
+//Output:
+//[2,3,6,8,8]
+//Expected:
+//[3,6,8,8,9]
+// Test 4
+// Input:
+// [1,2,3,3,6,6,7,7,9,9]
+// 8
+// 8
+// Output:
+// []
+// Expected:
+// [3,3,6,6,7,7,9,9]
+// Test 5
+// [0,0,1,2,3,3,4,7,7,8]
+// 3
+// 5
+// Output:
+// [0,0,1]
+// Expected:
+// [3,3,4]
