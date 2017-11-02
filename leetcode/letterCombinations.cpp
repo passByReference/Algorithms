@@ -8,7 +8,7 @@ vector<string> letterCombinations(string digits);
 
 int main(){
   vector<string> result;
-  result = letterCombinations("234");
+  result = letterCombinations("23");
   for(auto i : result)
     cout << i << endl;
 }
@@ -40,10 +40,10 @@ vector<string> letterCombinations(string digits){
       string s(1, c);
       vector<string>::iterator iter = result.begin();
       while(iter != result.end()){
-	string str = *iter;
-	str = str + s;
-	new_vec.push_back(str);
-	++iter;
+        string str = *iter;
+        str = str + s;
+        new_vec.push_back(str);
+        ++iter;
       }
     }
     result = new_vec;
